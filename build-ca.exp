@@ -1,0 +1,103 @@
+#! /usr/bin/env expect
+#
+# # @(!--#) @(#) build-ca.exp, sversion 0.1.0, fversion 001, 23-may-2025
+#
+# run the ./easyrsa script with the build-ca arguments and supply
+# the CN (common name) from the command line
+#
+
+# ----------------------------------------------------------------------
+
+#
+# Main
+#
+
+set scriptname [file tail $argv0]
+
+set argc [llength $argv]
+
+if {$argc == 0} {
+  send_error "$scriptname: must specify the common name as the first command line argument\n"
+  exit 1
+}
+
+set common_name [lindex $argv 0]
+
+if {$argc > 1} {
+  send_error "$scriptname: too many command line arguments specified\n"
+  exit 1
+}
+
+puts "Common Name (CN) ....: $common_name"
+
+spawn ./easyrsa build-ca
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for first password prompt\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for first password prompt\n"
+    exit 2
+  }
+  "Enter New CA Key Passphrase: " {
+    send "Passw0rd!\r"
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for second password prompt\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for second password prompt\n"
+    exit 2
+  }
+  "Confirm New CA Key Passphrase: " {
+    send "Passw0rd!\r"
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for common name prompt\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for common name prompt\n"
+    exit 2
+  }
+  "Common Name *]:" {
+    send "$common_name\r"
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for completed successfully message\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for completed successfully message\n"
+    exit 2
+  }
+  "Build-ca completed successfully." {
+    # fall through
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for easyrsa command to complete\n"
+    exit 2
+  }
+  eof {
+    # fall through
+  }
+}
+
+exit 0
+
+# end of file: build-ca.exp

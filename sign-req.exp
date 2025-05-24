@@ -1,0 +1,89 @@
+#! /usr/bin/env expect
+#
+# # @(!--#) @(#) sign-req.exp, sversion 0.1.0, fversion 001, 23-may-2025
+#
+# run the ./easyrsa script with the sign-req argument and supply
+# the request name from the command line
+#
+
+# ----------------------------------------------------------------------
+
+#
+# Main
+#
+
+set scriptname [file tail $argv0]
+
+set argc [llength $argv]
+
+if {$argc == 0} {
+  send_error "$scriptname: must specify the requst name as the first command line argument\n"
+  exit 1
+}
+
+set request_name [lindex $argv 0]
+
+if {$argc > 1} {
+  send_error "$scriptname: too many command line arguments specified\n"
+  exit 1
+}
+
+puts "Request Name (CN) ...: $request_name"
+
+spawn ./easyrsa sign-req client $request_name
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for confirm prompt\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for confirm prompt\n"
+    exit 2
+  }
+  "Confirm requested details: " {
+    send "yes\r"
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for passphrase prompt\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for passphrase prompt\n"
+    exit 2
+  }
+  "Enter pass phrase for *:" {
+    send "Passw0rd!\r"
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for certificate created message\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for certificate created message\n"
+    exit 2
+  }
+  "Certificate created at:" {
+    # fall through
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for easyrsa command to complete\n"
+    exit 2
+  }
+  eof {
+    # fall through
+  }
+}
+
+exit 0
+
+# end of file: sign-req.exp

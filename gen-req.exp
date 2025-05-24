@@ -1,0 +1,73 @@
+#! /usr/bin/env expect
+#
+# # @(!--#) @(#) gen-req.exp, sversion 0.1.0, fversion 001, 23-may-2025
+#
+# run the ./easyrsa script with the gen-req argument and supply
+# the CN (common name) from the command line
+#
+
+# ----------------------------------------------------------------------
+
+#
+# Main
+#
+
+set scriptname [file tail $argv0]
+
+set argc [llength $argv]
+
+if {$argc != 2} {
+  send_error "$scriptname: must specify the common name as the first command line argument and request name as second argument\n"
+  exit 1
+}
+
+set common_name [lindex $argv 0]
+set request_name [lindex $argv 1]
+
+puts "Common Name (CN) ....: $common_name"
+puts "Request Name ........: $request_name"
+
+spawn ./easyrsa --nopass gen-req $request_name
+
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for common name prompt\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for common name prompt\n"
+    exit 2
+  }
+  "Common Name *]:" {
+    send "$common_name\r"
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for files completed successfully message\n"
+    exit 2
+  }
+  eof {
+    send_error "\n$scriptname: eof waiting for files completed successfully message\n"
+    exit 2
+  }
+  "Private-Key and Public-Certificate-Request files created." {
+    # fall through
+  }
+}
+
+expect {
+  timeout {
+    send_error "\n$scriptname: timeout waiting for easyrsa command to complete\n"
+    exit 2
+  }
+  eof {
+    # fall through
+  }
+}
+
+exit 0
+
+# end of file: gen-req.exp
