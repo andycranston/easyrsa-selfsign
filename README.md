@@ -107,13 +107,13 @@ have been created. Descriptions are:
 + `00_ldapper.key` is the key for the 00_ldapper.crt certificate file
 
 Note that the `00_ldapper.key` file does NOT have a password so it must be protected
-from prying eyes/programs. A file mode of "-rw-------" is a good stark but take care when 
+from prying eyes/programs. A file mode of "-rw-------" is a good start but take care when 
 copying/moving the file to a different location either on the same system or a remote system.
 
 These three files can now be used for an application requiring a certificate and you are happy that
 a self-signed cerificate is suitable. For example I have a test OpenLDAP server (version 2.5.19)
 and I have a directory `/usr/local-local/openldap/ldapcerts`
-which contacts the three files:
+which contains the three files:
 
 ```
 00_ca.crt
