@@ -60,7 +60,7 @@ and put it in the same directory.
 
 Then run:
 
-````
+```
 ./selfsign.sh
 ```
 
