@@ -1,4 +1,4 @@
-# easyrsa-selfsign - create a selfsigned TLS certicate using EasyRSA version 3.2.2
+# easyrsa-selfsign - create a self-signed TLS certificate using EasyRSA version 3.2.2
 
 ## Pre-requisite - expect
 
@@ -8,7 +8,7 @@ one of the following:
 + sudo apt install expect
 + sudo dnf install expect
 
-If compiling `expect` (and the dependency `tcl`) from source make sure the expect
+If compiling `expect` (and the dependency `tcl`) from source make sure the `expect`
 command is in a directory in the PATH (e.g. `/usr/local/bin/expect`).
 
 ## Pre-reqsuite - bc
@@ -32,7 +32,7 @@ then install the `bc` package. One of:
 + sudo apt install bc
 + sudo dnf install bc
 
-or whatever package manager you are using.
+or whatever command to run the package manager on your specific Linux distribution.
 
 ## Pre-requsite - hostname is a fully qualified domain name
 
@@ -52,9 +52,7 @@ EasyRSA-3.2.2.tgz
 
 from this git repo:
 
-```
-https://github.com/OpenVPN/easy-rsa/releases/tag/v3.2.2
-```
+[https://github.com/OpenVPN/easy-rsa/releases/tag/v3.2.2](https://github.com/OpenVPN/easy-rsa/releases/tag/v3.2.2)
 
 and put it in the same directory.
 
