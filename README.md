@@ -100,13 +100,11 @@ The three files:
 00_ldapper.key
 ```
 
-Have been created. Descriptions are:
+have been created. Descriptions are:
 
-```
-00_ca.crt is the certificate for the Certificate Authority which signed the certificate file
-00_ldapper.crt is the certificate file which has been signed
-00_ldapper.key is the key for the 00_ldapper.crt certificate file
-```
++ `00_ca.crt` is the certificate for the Certificate Authority which signed the certificate file
++ `00_ldapper.crt` is the certificate file which has been signed
++ `00_ldapper.key` is the key for the 00_ldapper.crt certificate file
 
 Note that the `00_ldapper.key` file does NOT have a password so it must be protected
 from prying eyes/programs. A file mode of "-rw-------" is a good stark but take care when 
