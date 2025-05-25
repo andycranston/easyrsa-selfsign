@@ -1,0 +1,129 @@
+East RSA tar gzipped filename ........: EasyRSA-3.2.2.tgz
+Hostname .............................: ldapper.matrix.lab
+Request name .........................: ldapper
+Certificate Authority subdirectory ...: easy-rsa-ca
+Client sundirectory ..................: easy-rsa-client
+
+Notice
+------
+'init-pki' complete; you may now create a CA or requests.
+
+Your newly created PKI dir is:
+* /home/localadm/selfsign/easy-rsa-ca/pki
+
+Using Easy-RSA configuration:
+* undefined
+
+Notice
+------
+'init-pki' complete; you may now create a CA or requests.
+
+Your newly created PKI dir is:
+* /home/localadm/selfsign/easy-rsa-client/pki
+
+Using Easy-RSA configuration:
+* undefined
+ldapper.matrix.lab
+Common Name (CN) ....: ldapper.matrix.lab
+spawn ./easyrsa build-ca
+
+Enter New CA Key Passphrase: Passw0rd!
+
+
+Confirm New CA Key Passphrase: Passw0rd!
+
+.......+....+.....+...+....+...........+....+......+...+++++++++++++++++++++++++++++++++++++++*..............+......+...+.+++++++++++++++++++++++++++++++++++++++*...+................+...+..+.+...+.....+....+..+...+.+......+...........+.......+.....+.......+........+.............+..+..........+...........+......+.............+..+.+............+..+...+.+......+......+..+.+....................+.+.....+....+..+....+...........+...+.+...........+..........+...+..+.......+..+....+..+...............+.......+..+........................++++++
+....+...+........+.........+.............+++++++++++++++++++++++++++++++++++++++*.+..+...................+..+....+.....+.+.....+.......+..+.+.................+.+..+.........+....+..+............+...............+......+......+.+...+......+...+..+.+.....+...+....+......+..+...+.........+.+..+++++++++++++++++++++++++++++++++++++++*......+...................+.....+....+...+.....+...+...............+....+...+..+.+..+.......+.....+.......+......+..+...+...+.+.....+...+................+......+..............+.+.........+..+.......+........+............+.+..+....+...+...+.....+.............+.....+.......+...+...........+...+..........+..+.+..............++++++
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Common Name (eg: your user, host, or server name) [Easy-RSA CA]:ldapper.matrix.lab
+
+Notice
+------
+CA creation complete. Your new CA certificate is at:
+* /home/localadm/selfsign/easy-rsa-ca/pki/ca.crt
+
+Create an OpenVPN TLS-AUTH|TLS-CRYPT-V1 key now: See 'help gen-tls'
+
+Build-ca completed successfully.
+
+Common Name (CN) ....: ldapper.matrix.lab
+Request Name ........: ldapper
+spawn ./easyrsa --nopass gen-req ldapper
+..+.+.....+++++++++++++++++++++++++++++++++++++++*......+++++++++++++++++++++++++++++++++++++++*.....+.....+......+.+......+...+.....+.+.....+......+..................+.+.....+.+...+.....+......+.+..+..........+...........+.+......+..+............+...+......+......+....+..+....+..............+.+...+..+......+...+....+........+....+.........+..+....+...........+...+......+.+..............+...+.+.........+..+.+.............................+....+.........+..................+.....+....+...+...+.........+..............+.+.....+.............+...+.....+.........+...+..........+..+..........+...+...+..+.+..+...+.........+.......+.........+.....+....+..................+................................+.+.....+..........+......+......+...+..............+.+..+.........+.........+.++++++
+............+..+.+..+.......+......+............+++++++++++++++++++++++++++++++++++++++*..+..+.+..............+.............+...+..............+.......+......+++++++++++++++++++++++++++++++++++++++*...+..+............+.+...+...............+..+....+.....+....+.........+........+.............+.....+.++++++
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Common Name (eg: your user, host, or server name) [ldapper]:ldapper.matrix.lab
+
+Notice
+------
+Private-Key and Public-Certificate-Request files created.
+Your files are:
+* req: /home/localadm/selfsign/easy-rsa-client/pki/reqs/ldapper.req
+* key: /home/localadm/selfsign/easy-rsa-client/pki/private/ldapper.key
+
+
+Notice
+------
+Request successfully imported with short-name: ldapper
+This request is now ready to be signed.
+
+Request Name (CN) ...: ldapper
+spawn ./easyrsa sign-req client ldapper
+Please check over the details shown below for accuracy. Note that this request
+has not been cryptographically verified. Please be sure it came from a trusted
+source or that you have verified the request checksum with the sender.
+You are about to sign the following certificate:
+
+  Requested CN:     'ldapper.matrix.lab'
+  Requested type:   'client'
+  Valid for:        '825' days
+
+
+subject=
+    commonName                = ldapper.matrix.lab
+
+Type the word 'yes' to continue, or any other input to abort.
+  Confirm requested details: yes
+
+Using configuration from /home/localadm/selfsign/easy-rsa-ca/pki/4b354a44/temp.1.1
+Enter pass phrase for /home/localadm/selfsign/easy-rsa-ca/pki/private/ca.key:
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName            :ASN.1 12:'ldapper.matrix.lab'
+Certificate is to be certified until Aug 28 10:30:45 2027 GMT (825 days)
+
+Write out database with 1 new entries
+Database updated
+
+WARNING
+=======
+INCOMPLETE Inline file created:
+* /home/localadm/selfsign/easy-rsa-ca/pki/inline/ldapper.inline
+
+
+Notice
+------
+Certificate created at:
+* /home/localadm/selfsign/easy-rsa-ca/pki/issued/ldapper.crt
+
+**********************************************************************************************
+****
+****    -rw-------. 1 localadm localadm 1233 May 25 11:30 00_ca.crt
+****    -rw-------. 1 localadm localadm 4552 May 25 11:30 00_ldapper.crt
+****    -rw-------. 1 localadm localadm 1704 May 25 11:30 00_ldapper.key
+****
+**********************************************************************************************
